@@ -1,0 +1,6 @@
+mkdir Web.Api
+dotnet new angular
+mkdir Web.Api.Tests
+dotnet new xunit
+
+dotnet add reference ../Web.Api/Web.Api.csproj
