@@ -1,0 +1,3 @@
+﻿{
+  "ConnectionString": "Data Source=db;Initial Catalog=UserProject.Database;App=Web.Api;User Id=sa;Password=P@$sw0rd;"
+}

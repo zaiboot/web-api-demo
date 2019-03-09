@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using UserProjects.DAL;
 using UserProjects.DAL.Context;
 using UserProjects.DAL.Repositories;
@@ -75,7 +76,7 @@ namespace Web.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -90,7 +91,8 @@ namespace Web.Api
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
+            loggerFactory
+                .AddLog4Net();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -110,6 +112,13 @@ namespace Web.Api
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var ctx = serviceScope.ServiceProvider.GetService<IDataContext>();
+
+                ctx.MigrateAsync().Wait();
+            }
         }
     }
 }
