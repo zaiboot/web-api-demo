@@ -43,20 +43,25 @@ namespace Web.Api
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddTransient<IMapper, Mapper>();
-            services.AddOptions();
+
             //  Add framework services.
             var cnx = _configuration.GetValue<string>("ConnectionString");
             services.AddDbContext<UserProjectsDataContext>(options =>
             {
                 options.UseSqlServer(cnx);
             });
+            services.AddTransient<IMapper, Mapper>();
+            services.AddOptions();
+            
             var builder = new ContainerBuilder();
             builder.Populate(services);
             AddAutofacRegistrations(builder);
             var container = builder.Build();
         }
-
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            AddAutofacRegistrations(builder);
+        }
         private void AddAutofacRegistrations(ContainerBuilder builder)
         {
            builder.RegisterAssemblyTypes(

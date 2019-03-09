@@ -13,24 +13,16 @@
     using System.Data.SqlClient;
     using Microsoft.Extensions.Logging;
     using UserProjects.DAL.Context;
+    using System;
 
     public sealed class UserProjectsDataContext : DbContext, IDataContext
     {
         private readonly ILogger<UserProjectsDataContext> _logger;
         public DbSet<User> User { get; set; }
-
-        // public DbSet<Gender> Gender { get; set; }
+        public DbSet<Project> Project { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.Entity<User>().HasIndex(t => t.Email).IsUnique();
-            // modelBuilder.Entity<User>().HasIndex(i => i.UserName).IsUnique();
-
-            // modelBuilder.Entity<User>().Property(i => i.UserNameUpdatedCount).IsRequired().HasDefaultValue(0);
-
-            // base.OnModelCreating(modelBuilder);
-
-            // MoveTableToAuthSchema<User>(modelBuilder, "User");
 
             modelBuilder.Entity<UserProject>()
             .HasKey(up => new { up.UserId, up.ProjectId });
@@ -45,13 +37,6 @@
             .WithMany(p => p.UserProjects)
             .HasForeignKey(up => up.ProjectId);
         }
-
-        // private void MoveTableToAuthSchema<TTable>(ModelBuilder modelBuilder, string name) where TTable : class
-        // {
-        //     modelBuilder
-        //         .Entity<TTable>()
-        //         .ToTable(name, "auth");
-        // }
 
         public UserProjectsDataContext(DbContextOptions options, ILogger<UserProjectsDataContext> logger) : base(options)
         {
@@ -85,7 +70,34 @@
                 }
             }
 
-           // await SeedAsync();
+            await SeedAsync();
+        }
+
+        private async Task SeedAsync()
+        {
+            if (!User.Any())
+            {
+                var users = new List<User>();
+
+                for (int userCount = 0; userCount < 10; userCount++)
+                {
+                    users.Add(new User { Id = userCount, FirstName = "Test -" + userCount, LastName = "Madrigal " + userCount });
+                }
+                await User.AddRangeAsync(users);
+            }
+
+            if (!Project.Any())
+            {
+                var projects = new List<Project>();
+
+                for (int projectIndex = 0; projectIndex < 10; projectIndex++)
+                {
+                    projects.Add(new Project { StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow.AddDays(projectIndex), Credits = projectIndex + 1 });
+                }
+                await Project.AddRangeAsync(projects);
+            }
+
+
         }
 
         private bool AllMigrationsApplied()
@@ -101,29 +113,5 @@
             return !total.Except(applied).Any();
         }
 
-       
-            // if (!Gender.Any())
-            // {
-            //     var defaultGenders = new List<Gender> {
-            //         new Gender { Name = "male"},
-            //         new Gender { Name = "female"},
-            //         new Gender { Name = Constants.DEFAULT_GENDER }
-            //     };
-            //     await Gender.AddRangeAsync(defaultGenders);
-            //     SaveChanges();
-            // }
-
-            // if (!Roles.Any()) 
-            // {
-            //     var defaultRoles = new List<IdentityRole>
-            //     {
-            //         new IdentityRole { Name = Constants.USER_ROLE_FAN, NormalizedName = Constants.USER_ROLE_FAN.ToUpper() },
-            //         new IdentityRole { Name = Constants.USER_ROLE_ARTIST, NormalizedName = Constants.USER_ROLE_ARTIST.ToUpper() },
-            //         new IdentityRole { Name = Constants.USER_ROLE_MANAGER, NormalizedName = Constants.USER_ROLE_MANAGER.ToUpper() }
-            //     };
-            //     await Roles.AddRangeAsync(defaultRoles);
-            //     SaveChanges();
-            // }
-        // }
     }
 }
