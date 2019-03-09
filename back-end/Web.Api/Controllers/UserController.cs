@@ -16,7 +16,7 @@ namespace Web.Api.Controllers{
         public async Task<IReadOnlyList<UserModel>> GetAsync(){
 
             return await Task.FromResult(            
-                new List<UserModel>(){ new UserModel { UserId = 1 }}
+                new List<UserModel>()
             );
 
         }

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Web.Api\Web.Api.csproj" />
+    <ProjectReference Include="..\UserProjects.DAL\UserProjects.DAL.csproj" />
   </ItemGroup>
 
 </Project>
