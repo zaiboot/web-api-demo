@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Api", "Web.Api\Web.Api.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Api.Tests", "Web.Api.Tests\Web.Api.Tests.csproj", "{267A0301-232D-4FA7-980B-4FE13F1C1D1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User-Projects.DAL", "User-Projects.DAL\User-Projects.DAL.csproj", "{D9876310-9D8F-45FF-B7BC-299B345A1A21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProjects.DAL", "UserProjects.DAL\UserProjects.DAL.csproj", "{D9876310-9D8F-45FF-B7BC-299B345A1A21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProjects.Common", "UserProjects.Common\UserProjects.Common.csproj", "{CB9D173A-A72D-4C4D-A4BD-BDC65FD27530}"
 EndProject

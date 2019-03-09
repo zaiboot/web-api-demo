@@ -1,4 +1,4 @@
-namespace Sureal.Auth.Test.Helpers
+namespace UserProjects.Test.Helpers
 {
     using System;
     using Moq;

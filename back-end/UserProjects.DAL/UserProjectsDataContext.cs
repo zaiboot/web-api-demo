@@ -17,29 +17,43 @@
     public sealed class UserProjectsDataContext : DbContext, IDataContext
     {
         private readonly ILogger<UserProjectsDataContext> _logger;
+        public DbSet<User> User { get; set; }
 
         // public DbSet<Gender> Gender { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasIndex(t => t.Email).IsUnique();
-            modelBuilder.Entity<User>().HasIndex(i => i.UserName).IsUnique();
+            // modelBuilder.Entity<User>().HasIndex(t => t.Email).IsUnique();
+            // modelBuilder.Entity<User>().HasIndex(i => i.UserName).IsUnique();
 
-            modelBuilder.Entity<User>().Property(i => i.UserNameUpdatedCount).IsRequired().HasDefaultValue(0);
+            // modelBuilder.Entity<User>().Property(i => i.UserNameUpdatedCount).IsRequired().HasDefaultValue(0);
 
-            base.OnModelCreating(modelBuilder);
+            // base.OnModelCreating(modelBuilder);
 
-            MoveTableToAuthSchema<User>(modelBuilder, "User");         
+            // MoveTableToAuthSchema<User>(modelBuilder, "User");
+
+            modelBuilder.Entity<UserProject>()
+            .HasKey(up => new { up.UserId, up.ProjectId });
+
+            modelBuilder.Entity<UserProject>()
+            .HasOne(up => up.User)
+            .WithMany(u => u.UserProjects)
+            .HasForeignKey(up => up.UserId);
+
+            modelBuilder.Entity<UserProject>()
+            .HasOne(up => up.Project)
+            .WithMany(p => p.UserProjects)
+            .HasForeignKey(up => up.ProjectId);
         }
 
-        private void MoveTableToAuthSchema<TTable>(ModelBuilder modelBuilder, string name) where TTable : class
-        {
-            modelBuilder
-                .Entity<TTable>()
-                .ToTable(name, "auth");
-        }
+        // private void MoveTableToAuthSchema<TTable>(ModelBuilder modelBuilder, string name) where TTable : class
+        // {
+        //     modelBuilder
+        //         .Entity<TTable>()
+        //         .ToTable(name, "auth");
+        // }
 
-        public UserProjectsDataContext ( DbContextOptions  options, ILogger<UserProjectsDataContext> logger) : base(options)
+        public UserProjectsDataContext(DbContextOptions options, ILogger<UserProjectsDataContext> logger) : base(options)
         {
             _logger = logger;
         }
@@ -58,7 +72,8 @@
 
         public async Task MigrateAsync()
         {
-            if (!AllMigrationsApplied()) {
+            if (!AllMigrationsApplied())
+            {
                 try
                 {
                     await Database.MigrateAsync();
@@ -70,7 +85,7 @@
                 }
             }
 
-            await SeedAsync();
+           // await SeedAsync();
         }
 
         private bool AllMigrationsApplied()
@@ -86,8 +101,7 @@
             return !total.Except(applied).Any();
         }
 
-        private async Task SeedAsync()
-        {
+       
             // if (!Gender.Any())
             // {
             //     var defaultGenders = new List<Gender> {
@@ -110,6 +124,6 @@
             //     await Roles.AddRangeAsync(defaultRoles);
             //     SaveChanges();
             // }
-        }
+        // }
     }
 }
