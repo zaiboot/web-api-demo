@@ -7,6 +7,10 @@ using Web.Api.Controllers;
 using Xunit;
 using UserProjects.DAL.Models;
 using System.Threading.Tasks;
+using UserProjects.DAL.Repositories;
+using System.Collections.ObjectModel;
+using UserProjects.Common.Mapping;
+using Moq;
 
 namespace Web.Api.Tests
 {
@@ -23,27 +27,38 @@ namespace Web.Api.Tests
         public async void GetAllUsers(int userCount)
         {
             using (var mock = AutoMock.GetStrict())
-            {
+            {                
+                WhenIMockUsers(mock, userCount);                
+
                 var system = GivenTheSystemUnderTest(mock);
-                WhenIMockUsers(userCount);
                 var users = await WhenIGetUsersFromSystemAsync(system);
                 Assert.NotNull(users);
-                Assert.True(users.Count() == userCount, "User count do not match");
+                Assert.True(users.Count() == userCount, $"User count do not match");
             }
 
         }
 
-        private Task<IReadOnlyList<UserModel>>  WhenIGetUsersFromSystemAsync(UserController system)
+        private Task<IList<UserModel>>  WhenIGetUsersFromSystemAsync(UserController system)
         {
             return system.GetAsync();
         }
 
-        private void WhenIMockUsers(int usersCount)
+        private void WhenIMockUsers(AutoMock mock, int usersCount)
         {
+            var users = new List<User>();
+            var usersModel = new List<UserModel>();
+
             for (int i = 0; i < usersCount; i++)
             {
                 var user = WhenIGetAUser(i);
+                users.Add(user);
+                var userModel = new UserModel { UserId = i};
+                usersModel.Add(userModel);
             }
+            mock.Mock<IUserRepository>().Setup( ur => ur.Get()
+            ).Returns(users.AsQueryable());
+            
+            AndISetupAMapping<List<User>, List<UserModel>>(mock, usersModel);
         }
 
         private User WhenIGetAUser(int userId)
@@ -54,6 +69,15 @@ namespace Web.Api.Tests
         private UserController GivenTheSystemUnderTest(AutoMock mock)
         {
             return mock.Create<UserController>();
+        }
+
+         protected void AndISetupAMapping<TFrom, TDestiny>(AutoMock mock, TDestiny result) where TDestiny : new()
+        {
+            mock.Mock<IMappingEngine>().Setup(m =>
+                m.Map<TFrom, TDestiny>(
+                        It.IsAny<TFrom>()
+                        )
+            ).Returns(result);
         }
     }
 }
