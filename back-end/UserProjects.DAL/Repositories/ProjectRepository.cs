@@ -13,7 +13,12 @@ namespace UserProjects.DAL.Repositories
         }
 
         public IQueryable<Project> GetProjectsByUser(int UserId){
-            return base.Get().Where( p => p.UserProjects.Where(u => u.UserId == UserId ).Count() > 0);
+            UserProjectsDataContext dbContext = _dbContext as UserProjectsDataContext;
+            
+            return dbContext.UserProject.Where( up => up.UserId == UserId).Select(
+                up => up.Project
+            ).Include( p => p.UserProjects);
+            
         }
     }
 }

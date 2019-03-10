@@ -8,7 +8,7 @@ namespace UserProjects.DAL.Repositories
     public class BaseRepository<T> : IBaseRepository<T>
         where T : BaseEntity
     {
-        private readonly DbContext _dbContext;
+        protected readonly DbContext _dbContext;
 
         public BaseRepository(DbContext dbContext)
         {

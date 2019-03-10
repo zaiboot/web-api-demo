@@ -20,6 +20,7 @@
         private readonly ILogger<UserProjectsDataContext> _logger;
         public DbSet<User> User { get; set; }
         public DbSet<Project> Project { get; set; }
+        public DbSet<UserProject> UserProject { get; set; }
         
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
