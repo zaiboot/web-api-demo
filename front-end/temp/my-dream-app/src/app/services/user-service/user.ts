@@ -10,9 +10,4 @@ export class User {
     }
 
 
-    public get Id(): number {
-        return this.id;
-    }
-
-
 }

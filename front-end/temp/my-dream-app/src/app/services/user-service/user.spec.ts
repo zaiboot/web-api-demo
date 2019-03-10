@@ -11,7 +11,7 @@ describe('User', () => {
 
   it('should get id', () => {
     var user = new User(1,"first", "last");
-    expect(user.Id).toBe(1);
+    expect(user.id).toBe(1);
   });
 
 
