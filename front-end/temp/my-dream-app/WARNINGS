@@ -1,0 +1,8 @@
+npm WARN @progress/kendo-angular-grid@3.13.0 requires a peer of @progress/kendo-angular-buttons@^4.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @progress/kendo-angular-grid@3.13.0 requires a peer of @progress/kendo-angular-inputs@2 - 4 but none is installed. You must install peer dependencies yourself.
+npm WARN @progress/kendo-angular-grid@3.13.0 requires a peer of @progress/kendo-angular-intl@^1.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @progress/kendo-angular-grid@3.13.0 requires a peer of @progress/kendo-data-query@^1.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @progress/kendo-angular-grid@3.13.0 requires a peer of @progress/kendo-drawing@^1.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @progress/kendo-angular-grid@3.13.0 requires a peer of @progress/kendo-angular-excel-export@1 - 2 but none is installed. You must install peer dependencies yourself.
+npm WARN @progress/kendo-angular-grid@3.13.0 requires a peer of @progress/kendo-angular-dateinputs@2 - 3 but none is installed. You must install peer dependencies yourself.
+npm WARN @progress/kendo-angular-pdf-export@1.2.0 requires a peer of @progress/kendo-drawing@^1.2.0 but none is installed. You must install peer dependencies yourself.

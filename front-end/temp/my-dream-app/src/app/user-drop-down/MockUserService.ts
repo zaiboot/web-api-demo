@@ -1,17 +1,8 @@
-import { Injectable } from '@angular/core';
-import { User } from './user';
-import { Project } from './project';
-import { Observable } from 'rxjs';
-import { of } from 'rxjs';
-
-
-@Injectable({
-  providedIn: 'root'
-})
-export class UserService {
-
-  constructor() { }
-
+import { Observable, of } from 'rxjs';
+import { User } from '../services/user-service/user';
+import { Project } from '../services/user-service/project';
+export class MockUserService {
+ 
   getUsers(): Observable<User[]> {
     let listOfUsers :  User[];
     listOfUsers = [ new User(1, "a1", "b"),
@@ -31,5 +22,4 @@ export class UserService {
     ];
     return of(listOfProjects);
   }
-
 }

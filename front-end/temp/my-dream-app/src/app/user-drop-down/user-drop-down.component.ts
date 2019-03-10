@@ -11,13 +11,15 @@ export class UserDropDownComponent implements OnInit {
 
 
   public Users: User[];
-
+  public defaultItem: User = new User(-1,"-", "");
   constructor(private userService: UserService) { }
 
-  ngOnInit() {
-    this.Users = this.getUsers();
+  ngOnInit():void {
+    this.subscribeToUsers();
   }
-  getUsers(): User[] {
-    return this.userService.getUsers();
+  subscribeToUsers():void {
+     this.userService.getUsers().subscribe( (u: User[]) =>  {        
+        this.Users = u; 
+      } );
   }
 }
