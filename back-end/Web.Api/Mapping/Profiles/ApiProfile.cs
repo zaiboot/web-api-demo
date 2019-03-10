@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using UserProjects.DAL.Models;
 using Web.Api.Models;
 
@@ -16,6 +17,8 @@ namespace Web.Api.Mapping.Profiles
 
             CreateMap<Project ,ProjectModel >()
                 .ForMember(pm => pm.ProjectId, opt => opt.MapFrom(p => p.Id))
+                .ForMember(pm => pm.IsActive, opt => opt.MapFrom(p => p.UserProjects.FirstOrDefault().IsActive))
+                
             ;
         }
     }
