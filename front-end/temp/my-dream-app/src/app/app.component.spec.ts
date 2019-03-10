@@ -1,11 +1,19 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { UserDropDownComponent } from './user-drop-down/user-drop-down.component';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        UserDropDownComponent
+      ],
+      imports: [
+        DropDownsModule,
+        BrowserAnimationsModule
       ],
     }).compileComponents();
   }));

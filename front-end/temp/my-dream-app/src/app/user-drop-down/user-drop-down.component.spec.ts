@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserDropDownComponent } from './user-drop-down.component';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 describe('UserDropDownComponent', () => {
   let component: UserDropDownComponent;
@@ -8,7 +9,10 @@ describe('UserDropDownComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserDropDownComponent ]
+      declarations: [ UserDropDownComponent ],
+      imports: [
+        DropDownsModule
+      ]
     })
     .compileComponents();
   }));
