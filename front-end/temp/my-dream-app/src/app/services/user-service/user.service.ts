@@ -24,10 +24,12 @@ export class UserService {
   getProjectsPerUser(userId: number): Observable<Project[]> {
     let listOfProjects :  Project[];
     listOfProjects = [ 
-      new Project(1, new Date(), new Date(), 10, true),
-      new Project(2, new Date(), new Date(), 10, false),
-      new Project(3, new Date(), new Date(), 10, false),
-      new Project(4, new Date(), new Date(), 10, true),
+      new Project(1, new Date(2010,12, 20), new Date(2011,12, 20), 10, true),
+      new Project(2, new Date(2011,12, 20), new Date(2012,12, 20), 10, false),
+      new Project(3, new Date(2012,12, 20), new Date(2013,12, 20), 10, false),
+      new Project(4, new Date(2013,12, 20), new Date(2014,12, 20), 10, true),
+      new Project(5, new Date(2015,12, 20), new Date(2014,12, 20), 10, true),
+      new Project(6, new Date(2015,12, 20), new Date(2015,12, 20), 10, true),
     ];
     return of(listOfProjects);
   }

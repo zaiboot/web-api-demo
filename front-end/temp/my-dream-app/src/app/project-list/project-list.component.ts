@@ -25,8 +25,10 @@ export class ProjectListComponent implements OnInit {
   }
   
 
-  public CalculateTimeToStart(p: Project): number {
-    return 10;
+  public CalculateTimeToStart(p: Project): string {
+    var timeDiff = p.EndDate.getTime() - p.StartDate.getTime();
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));    
+    return diffDays < 0 ?  'Started':diffDays.toLocaleString();
   }
 
 }
