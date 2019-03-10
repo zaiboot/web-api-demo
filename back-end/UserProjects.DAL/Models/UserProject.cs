@@ -6,9 +6,12 @@ namespace UserProjects.DAL.Models
 
     public class UserProject
     {
+                
         [Required]
         public int UserId { get; set; }
+
         public User User { get; set; }
+
         [Required]
         public int ProjectId { get; set; }
         public Project Project { get; set; }

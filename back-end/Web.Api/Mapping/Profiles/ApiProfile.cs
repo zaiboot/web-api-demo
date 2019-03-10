@@ -11,6 +11,7 @@ namespace Web.Api.Mapping.Profiles
         public ApiProfile()
         {
             CreateMap<User ,UserModel >()
+                .ForMember(um => um.UserId, opt => opt.MapFrom(u => u.Id))
             ;
         }
     }

@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using UserProjects.Common.Mapping;
 using UserProjects.DAL;
 using UserProjects.DAL.Context;
 using UserProjects.DAL.Repositories;
@@ -70,13 +71,26 @@ namespace Web.Api
 
         #region REPOSITORY
 
-            builder.RegisterType<UserProjectsDataContext>().As<IDataContext>().InstancePerLifetimeScope();
+            builder.RegisterType<UserProjectsDataContext>().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(
                 Assembly.GetAssembly(typeof(UserRepository)))
                 .Where(t => t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces();
             
         #endregion
+        
+            builder.Register(ctx =>
+            {
+                var logger = ctx.Resolve<ILogger<MappingEngine>>();
+
+                var assemblies = new[]
+                {
+                    Assembly.GetAssembly(typeof(UserRepository)),
+                    Assembly.GetExecutingAssembly()
+                };
+                return new MappingEngine(assemblies, logger);
+            }).As<IMappingEngine>().InstancePerLifetimeScope();
+
 
         }
 
@@ -117,13 +131,6 @@ namespace Web.Api
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var ctx = serviceScope.ServiceProvider.GetService<IDataContext>();
-
-                ctx.MigrateAsync().Wait();
-            }
         }
     }
 }

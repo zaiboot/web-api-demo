@@ -6,6 +6,7 @@
     using Common.Results;
     using Models;
     using System.Linq;
+    using UserProjects.DAL.Context;
 
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
