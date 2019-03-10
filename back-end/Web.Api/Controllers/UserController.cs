@@ -16,11 +16,13 @@ namespace Web.Api.Controllers
     {
         private IUserRepository _userRepository;
         private readonly IMappingEngine _mappingEngine;
+        private readonly IProjectRepository _projectRepository;
 
-        public UserController(IUserRepository userRepository, IMappingEngine mappingEngine) //TODO: add DI dependencies
+        public UserController(IUserRepository userRepository, IMappingEngine mappingEngine, IProjectRepository projectRepository) 
         {
             _userRepository = userRepository;
             _mappingEngine = mappingEngine;
+            _projectRepository = projectRepository;
         }
 
 
@@ -36,5 +38,16 @@ namespace Web.Api.Controllers
             );
 
         }
+    
+        [HttpGet("{id}/projects")]
+        public async Task<IList<ProjectModel>> GetProjects(int id){
+            return await Task.FromResult(
+                _mappingEngine.Map<List<Project>, List<ProjectModel>>(
+                        _projectRepository.GetProjectsByUser(id).ToList()
+                        )                
+            ); 
+            
+        }
+    
     }
 }

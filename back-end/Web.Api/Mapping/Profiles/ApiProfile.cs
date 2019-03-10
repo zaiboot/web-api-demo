@@ -13,6 +13,10 @@ namespace Web.Api.Mapping.Profiles
             CreateMap<User ,UserModel >()
                 .ForMember(um => um.UserId, opt => opt.MapFrom(u => u.Id))
             ;
+
+            CreateMap<Project ,ProjectModel >()
+                .ForMember(pm => pm.ProjectId, opt => opt.MapFrom(p => p.Id))
+            ;
         }
     }
 }

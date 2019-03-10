@@ -3,15 +3,11 @@
 ## Contexts
 * User
     - GET: Gimme all users. Ex:
-        - /api/users
+        - /api/user
 
     - Projects
         - GET: Gimme all projects for selected user. Ex:
-            - /api/users/{userid}/projects
-
-* Project
-    - Get: Gimme all projects per user. Ex:
-        - /api/projects
+            - /api/user/{userid}/project
 
 # Entity Framework
 * Code first
