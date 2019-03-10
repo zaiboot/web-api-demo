@@ -81,20 +81,44 @@
 
                 for (int userCount = 0; userCount < 10; userCount++)
                 {
-                    users.Add(new User { Id = userCount, FirstName = "Test -" + userCount, LastName = "Madrigal " + userCount });
+                    users.Add(new User { FirstName = "Test -" + userCount, LastName = "Madrigal " + userCount });
                 }
                 await User.AddRangeAsync(users);
+
             }
 
             if (!Project.Any())
             {
                 var projects = new List<Project>();
 
-                for (int projectIndex = 0; projectIndex < 10; projectIndex++)
+                for (int projectIndex = 0; projectIndex < 100; projectIndex++)
                 {
                     projects.Add(new Project { StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow.AddDays(projectIndex), Credits = projectIndex + 1 });
                 }
                 await Project.AddRangeAsync(projects);
+
+            }
+            SaveChanges();
+
+            var usersWithProjects = await User.Take(5).OrderBy(u => u.Id).ToListAsync();
+
+            var projectCount = 1;
+            foreach (var u in usersWithProjects)
+            {
+                if (!u.UserProjects.Any())
+                {
+                    var projects = Project.Skip(projectCount).Take(projectCount).Select(p =>
+                       new UserProject
+                       {
+                           UserId = u.Id,
+                           ProjectId = p.Id
+                       }
+
+                    );
+
+                    u.UserProjects.AddRange(projects);
+                }
+                projectCount++;
             }
 
 

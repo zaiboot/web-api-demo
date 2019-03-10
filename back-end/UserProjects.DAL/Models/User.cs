@@ -14,7 +14,7 @@
         [MaxLength(50)]
         [Required]
         public string LastName { get; set; }
-        public ICollection<UserProject> UserProjects { get; set; }
+        public List<UserProject> UserProjects { get; set; }
 
     }
 }
