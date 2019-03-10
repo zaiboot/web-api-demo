@@ -18,7 +18,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.messageService.getMessage().subscribe(message => {
-      console.log("new message " , message.content);
       this.subscribeProjectList(message.content.userId);
     });
   }
@@ -28,7 +27,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
 }
   subscribeProjectList(userId: number): void {
-    console.log("new UserId " , userId);
     this.userService.getProjectsPerUser(userId).subscribe((p: Project[]) => {
       this.gridData = p;
     });
