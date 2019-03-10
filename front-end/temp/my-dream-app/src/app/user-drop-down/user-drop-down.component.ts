@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user-service/user.service';
+import { User } from '../services/user-service/user';
 
 @Component({
   selector: 'app-user-drop-down',
@@ -8,14 +9,15 @@ import { UserService } from '../services/user-service/user.service';
 })
 export class UserDropDownComponent implements OnInit {
 
-  constructor() { }
+
+  public Users: User[];
+
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.Users = this.getUsers();
   }
-
-  public listItems: Array<string> = [
-    'Baseball', 'Basketball', 'Cricket', 'Field Hockey',
-    'Football', 'Table Tennis', 'Tennis', 'Volleyball'
-  ];
-  public value = ['Basketball', 'Cricket'];
+  getUsers(): User[] {
+    return this.userService.getUsers();
+  }
 }
