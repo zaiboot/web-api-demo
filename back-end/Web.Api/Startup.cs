@@ -21,6 +21,9 @@ namespace Web.Api
 {
     public class Startup
     {
+        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+
         public Startup(IHostingEnvironment env)
         {
              var builder = new ConfigurationBuilder()
@@ -37,7 +40,15 @@ namespace Web.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            services.AddCors(options => {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                    corsPolicyBuilder =>
+                    {
+                        corsPolicyBuilder.AllowAnyOrigin();
+                        corsPolicyBuilder.WithMethods("GET");
+                    });
+ 
+            });
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -97,6 +108,7 @@ namespace Web.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseCors(MyAllowSpecificOrigins); 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -19,7 +19,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.messageService.getMessage().subscribe(message => {
       console.log("new message " , message.content);
-      this.subscribeProjectList(message.content.id);
+      this.subscribeProjectList(message.content.userId);
     });
   }
 
@@ -36,7 +36,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
 
   public CalculateTimeToStart(p: Project): string {
-    var timeDiff = p.EndDate.getTime() - p.StartDate.getTime();
+    var timeDiff = p.endDate.getTime() - p.startDate.getTime();
     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     return diffDays < 0 ? 'Started' : diffDays.toLocaleString();
   }

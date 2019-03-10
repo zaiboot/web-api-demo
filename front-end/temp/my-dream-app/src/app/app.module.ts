@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { UserDropDownComponent } from './user-drop-down/user-drop-down.component';
@@ -15,13 +16,14 @@ import { GridModule } from '@progress/kendo-angular-grid';
   declarations: [
     AppComponent,
     UserDropDownComponent,
-    ProjectListComponent
+    ProjectListComponent    
   ],
   imports: [
     BrowserModule,
     DropDownsModule,
     BrowserAnimationsModule,
-    GridModule
+    GridModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,8 +1,8 @@
 <p>
     <kendo-grid [data]="gridData" [height]="410">
-        <kendo-grid-column field="Id" title="Project Id">
+        <kendo-grid-column field="projectId" title="Project Id">
         </kendo-grid-column>
-        <kendo-grid-column field="StartDate" title="Start Date">
+        <kendo-grid-column field="startDate" title="Start Date">
             <ng-template kendoGridCellTemplate let-dataItem>
                 <span> {{dataItem.StartDate.toLocaleDateString("en-US")}}</span>
             </ng-template>
@@ -12,14 +12,14 @@
                 <span> {{CalculateTimeToStart(dataItem)  }}</span>
             </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column field="EndDate" title="End Date">
+        <kendo-grid-column field="endDate" title="End Date">
                 <ng-template kendoGridCellTemplate let-dataItem>
                         <span> {{dataItem.EndDate.toLocaleDateString("en-US")}}</span>
                     </ng-template>            
         </kendo-grid-column>
-        <kendo-grid-column field="Credits" title="Credits">
+        <kendo-grid-column field="credits" title="Credits">
         </kendo-grid-column>
-        <kendo-grid-column field="IsActive" title="Status">
+        <kendo-grid-column field="isActive" title="Status">
             <ng-template kendoGridCellTemplate let-dataItem>
                 <span> {{dataItem.IsActive ? "Active" : "Inactive"}}</span>
             </ng-template>

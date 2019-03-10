@@ -25,7 +25,6 @@ export class UserDropDownComponent implements OnInit {
     });
   }
   public valueChange(u: User): void {
-    console.log("Value changed " , u)
     this.messageService.sendMessage(u);
   }
 

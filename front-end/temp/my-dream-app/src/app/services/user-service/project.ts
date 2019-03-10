@@ -1,6 +1,6 @@
 export class Project {
-    constructor(public Id: number, public StartDate: Date, 
-        public EndDate: Date, public Credits: number, public IsActive: boolean) { }
+    constructor(public projectId: number, public startDate: Date, 
+        public endDate: Date, public credits: number, public IsActive: boolean) { }
 
     
 }
